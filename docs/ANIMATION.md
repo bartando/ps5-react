@@ -182,7 +182,7 @@ const col = current % COLS, row = Math.floor(current / COLS);
 ```
 
 Fixed card sizes make the highlight position plain arithmetic. Keep scaled
-cards within 256 logical px at the 2560-wide render (see
+cards within 256 logical px at a 3840-wide render (see
 [Performance](#performance-on-the-cpu-renderer)).
 
 ### Focus: a light running around the border
@@ -356,8 +356,8 @@ plus an offscreen copy when that area is faded or transformed.
   rectangles and needs no offscreen copy. Prefer it for focus, sliding
   highlights, and page transitions.
 - **Scale and rotate only on small elements.** The untransformed subtree is
-  copied into a transform buffer of 512×512 physical px. At the default
-  2560-wide render with `baseWidth` 1280, that is **256×256 logical px**;
+  copied into a transform buffer of 768×768 physical px. At a 3840-wide
+  render with `baseWidth` 1280, that is **256×256 logical px** (384 at 2560);
   larger elements do not render scaled. Every change inside a transformed node
   repaints the whole node.
 - **Opacity composites through scratch strips.** A small fade is cheap. A

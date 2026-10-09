@@ -73,6 +73,11 @@
 
 ## Unreleased
 
+- The engine's offscreen buffers fit a 3840-wide render. They were sized for 2560 wide, so at 3840
+  opacity, shadows and transforms (`focused:scale-*`) were skipped without a warning on nodes over
+  170 logical px, and full-width images and gradients stopped at x=2560. The scratch and transform
+  buffers are now 768 px (256 logical px at 3840, as 512 was at 2560) and image rows 3840 px. Every
+  app pays about 6.6 MiB more static memory for this, outside the 256 MiB heap.
 - Downloads treat a busy server as busy, not as a damaged file. archive.org's storage node answered
   HTTP 500 to some of 16 or 64 concurrent ranges, which failed the whole task as "server changed the
   resource"; now HTTP 5xx/429/408 and broken connections retry the range up to eight times (0.5 to

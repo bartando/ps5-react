@@ -9,16 +9,25 @@ endif()
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 set(ERUI_BORDER_AA ON CACHE BOOL "" FORCE)
 set(ERUI_TRANSFORMS FULL CACHE STRING "" FORCE)
-set(ERUI_SCRATCH_W 512 CACHE STRING "" FORCE)
-set(ERUI_SCRATCH_H 512 CACHE STRING "" FORCE)
+# Opacity, shadows and transforms (focused:scale-*) render a node through this scratch and skip the
+# effect for anything larger. 768 px is 256 logical px at a 3840-wide render, the budget 512 gave at
+# 2560; it costs about 6.6 MiB of .bss over 512.
+set(ERUI_SCRATCH_W 768 CACHE STRING "" FORCE)
+set(ERUI_SCRATCH_H 768 CACHE STRING "" FORCE)
+# The engine derives these from the scratch size only on a fresh cache; force them so existing build
+# directories pick up a change too.
+set(ERUI_SCRATCH_BAND_H 768 CACHE STRING "" FORCE)
+set(ERUI_XFORM_W 768 CACHE STRING "" FORCE)
+set(ERUI_XFORM_H 768 CACHE STRING "" FORCE)
 # Motion allocates one Animated.Value per animated key per element (716 B each with 8 bindings). A
 # search over a large catalog mounts enough animated cards at once to exhaust 256.
 set(ERUI_MAX_ANIM_VALUES 1024 CACHE STRING "" FORCE)
 set(ERUI_MAX_VALUE_BINDINGS 8 CACHE STRING "" FORCE)
-# Photos are baked at half size and drawn up to 2560 px wide: bilinear, one full-width row in the
-# scaler and gradient pools (+7 KB each over 800 px), and 256 image slots (+11 KB at 88 B per slot).
+# Photos are baked at half size and drawn up to 3840 px wide: bilinear, one full-width row in the
+# scaler and gradient pools (+12 KB each over 800 px; a gradient wider than the row loses its right
+# side), and 256 image slots (+11 KB at 88 B per slot).
 set(ERUI_BILINEAR_SCALE ON CACHE BOOL "" FORCE)
-set(ERUI_MAX_IMG_ROW_PIXELS 2560 CACHE STRING "" FORCE)
+set(ERUI_MAX_IMG_ROW_PIXELS 3840 CACHE STRING "" FORCE)
 set(ERUI_IMAGE_REGISTRY_MAX 256 CACHE STRING "" FORCE)
 # View backgroundGradient (linear and radial; also <Svg> gradient fills): about 5 KB of code, an 8 KB
 # colour ramp and a 10 KB row per render worker; nodes without a gradient pay nothing per frame.
