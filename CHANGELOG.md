@@ -73,6 +73,14 @@
 
 ## Unreleased
 
+- The starter (and so every `npm run create` scaffold) renders and presents at 3840×2160.
+  It rendered at 2560×1440 into a 1920×1080 surface, which the presenter scaled down 0.75×
+  with bilinear filtering and no mipmaps, and a 4K TV upscaled again, softening text. Tailwind
+  classes scale with the render width; the starter's pinned font sizes did not, so the 4K title
+  fell back to 80 px. The starter now lets the bundler discover its font sizes. On a PS5 fat
+  (firmware 13.60, kstuff, etaHEN, ShadowMountPlus) the rebuilt starter held 60 fps with a
+  3840×2160 framebuffer and a 43 MiB heap; its first frame was presented at 224 ms. Input and
+  full-screen animation were not measured at 4K.
 - The engine's offscreen buffers fit a 3840-wide render. They were sized for 2560 wide, so at 3840
   opacity, shadows and transforms (`focused:scale-*`) were skipped without a warning on nodes over
   170 logical px, and full-width images and gradients stopped at x=2560. The scratch and transform

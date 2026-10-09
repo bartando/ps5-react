@@ -82,7 +82,7 @@ physical px = round(logical px × render.width / baseWidth)
 ```
 
 `render.width` comes from `app.json`; `baseWidth` from `tailwind.config.js`
-(default 1280). The starter renders at 2560×1440, so `p-4` (16px) becomes 32px.
+(default 1280). The starter renders at 3840×2160, so `p-4` (16px) becomes 48px.
 `w-screen`, `h-screen`, `min-w-screen`, `max-w-screen`, `min-h-screen`, and
 `max-h-screen` use the exact render width or height. Unitless values (opacity,
 z-index, flex, scale, rotation, aspect ratio, relative line height and tracking)

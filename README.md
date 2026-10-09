@@ -192,7 +192,11 @@ sizes and automatic exit. A configuration for the example app is:
 ```
 
 The render size determines software rasterization cost and styling scale; the
-surface size is the displayed framebuffer size. Configuration errors are
+surface size is the displayed framebuffer size. Keep them equal: different
+sizes go through a bilinear texture scale that softens text. The starter uses
+3840×2160 for sharp text on 4K TVs. For apps that redraw large areas every
+frame, 1920×1080 costs a quarter of the rasterization and uploads changed rows
+through the faster buffer-texture path. Configuration errors are
 reported before expensive builds. Add networking and filesystem opt-ins only
 when your app needs those capabilities.
 
